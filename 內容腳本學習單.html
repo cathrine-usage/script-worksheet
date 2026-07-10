@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>教學內容腳本學習單</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FFF9F2; --ink:#241E17; --gold:#FFC23E; --gold-soft:#FFEFC9;
+    --orange:#D85A30; --brown:#5c4a2e; --muted:#8a7a63;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:'Noto Sans TC',sans-serif; background:var(--cream); color:var(--ink); line-height:1.7; padding:32px 16px 80px;}
+  .wrap{max-width:720px; margin:0 auto;}
+  .eyebrow{font-size:13px; letter-spacing:.2em; color:var(--orange); font-weight:700; margin-bottom:8px;}
+  h1{font-size:clamp(26px,5vw,36px); font-weight:900; line-height:1.3;}
+  .lead{color:var(--brown); margin:10px 0 32px; font-size:15px;}
+  .card{background:#fff; border-radius:16px; padding:22px 22px 24px; margin-bottom:18px; border:1px solid #f0e4d2;}
+  .num{display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:50%; background:var(--gold); color:var(--ink); font-weight:900; font-size:14px; margin-right:10px; flex:none;}
+  .card h2{font-size:17px; font-weight:700; display:flex; align-items:center; margin-bottom:4px;}
+  .hint{font-size:13px; color:var(--muted); margin-bottom:14px; padding-left:38px;}
+  .fields{padding-left:38px;}
+  input[type=text]{width:100%; padding:11px 14px; border:1.5px solid #e8dcc8; border-radius:10px; font-family:inherit; font-size:15px; background:#fffdf9;}
+  input[type=text]:focus{outline:none; border-color:var(--gold);}
+  .aud-row{margin-bottom:12px;}
+  .aud-row label{display:block; font-size:13.5px; font-weight:700; margin-bottom:4px;}
+  .opts{display:flex; flex-wrap:wrap; gap:8px;}
+  .opts label{cursor:pointer;}
+  .opts input{position:absolute; opacity:0; pointer-events:none;}
+  .pill{display:inline-block; padding:8px 16px; border-radius:99px; border:1.5px solid #e8dcc8; background:#fffdf9; font-size:14px; transition:all .15s;}
+  .opts input:checked + .pill{background:var(--gold); border-color:var(--gold); font-weight:700;}
+  .opts input:focus-visible + .pill{outline:2px solid var(--orange); outline-offset:2px;}
+  .style-note{font-size:12.5px; color:var(--muted); margin-top:8px;}
+  .go{display:block; width:100%; padding:16px; margin-top:8px; background:var(--ink); color:#fff; font-family:inherit; font-size:17px; font-weight:700; border:none; border-radius:14px; cursor:pointer;}
+  .go:hover{background:#3a2f22;}
+  .result{display:none; margin-top:22px;}
+  .result.show{display:block;}
+  .result h3{font-size:16px; font-weight:700; margin-bottom:10px;}
+  pre{white-space:pre-wrap; word-break:break-word; background:var(--ink); color:#f5edE0; border-radius:14px; padding:20px; font-size:13.5px; font-family:'Noto Sans TC',monospace; line-height:1.8; max-height:420px; overflow:auto;}
+  .copy{margin-top:12px; width:100%; padding:14px; background:var(--gold); border:none; border-radius:12px; font-family:inherit; font-size:16px; font-weight:900; color:var(--ink); cursor:pointer;}
+  .copy:hover{background:#f0b32e;}
+  .warn{color:var(--orange); font-size:13.5px; margin-top:8px; display:none;}
+  footer{text-align:center; margin-top:36px; font-size:12.5px; color:var(--muted);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow">不只是教課，還要會發文</p>
+  <h1>教學內容腳本學習單</h1>
+  <p class="lead">填完六格，按下「生成我的 AI 指令」，把整段複製貼給任何 AI（ChatGPT、Claude、Gemini 都可以），它就會照你的受眾和平台幫你產出腳本。記住：AI 負責快，你負責真。</p>
+
+  <div class="card">
+    <h2><span class="num">1</span>主題</h2>
+    <p class="hint">這支內容要教的「一個」點，一次只教一個。例：「再」「在」怎麼分</p>
+    <div class="fields"><input type="text" id="topic" placeholder="例：「再」「在」怎麼分"></div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">2</span>形式與長度</h2>
+    <p class="hint">不想露臉、不會剪片？圖卡和純文字也是好選擇。</p>
+    <div class="fields opts" id="format">
+      <label><input type="radio" name="format" value="短影音 15-30 秒（單點爆發）"><span class="pill">短影音 15–30 秒</span></label>
+      <label><input type="radio" name="format" value="短影音 30-60 秒（觀念＋例句）" checked><span class="pill">短影音 30–60 秒</span></label>
+      <label><input type="radio" name="format" value="圖卡 5-8 張（可保存的知識卡）"><span class="pill">圖卡 5–8 張</span></label>
+      <label><input type="radio" name="format" value="純文字貼文"><span class="pill">純文字貼文</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">3</span>我的受眾</h2>
+    <p class="hint">受眾是一群擁有相似痛點的人。寫得越具體，腳本越準。</p>
+    <div class="fields">
+      <div class="aud-row"><label for="aud-who">他是誰</label><input type="text" id="aud-who" placeholder="例：19–25 歲交換生，在台一學期，有基礎中文"></div>
+      <div class="aud-row"><label for="aud-pain">他的痛點</label><input type="text" id="aud-pain" placeholder="例：課本中文流利，但聽不懂在地用語"></div>
+      <div class="aud-row"><label for="aud-want">他想要</label><input type="text" id="aud-want" placeholder="例：離開台灣前能用在地用語自然對話"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">4</span>呈現平台</h2>
+    <p class="hint">先想你的受眾在哪，再選平台。</p>
+    <div class="fields opts" id="platform">
+      <label><input type="radio" name="platform" value="Instagram（Reels／圖卡）" checked><span class="pill">Instagram</span></label>
+      <label><input type="radio" name="platform" value="TikTok"><span class="pill">TikTok</span></label>
+      <label><input type="radio" name="platform" value="YouTube Shorts"><span class="pill">YouTube Shorts</span></label>
+      <label><input type="radio" name="platform" value="Threads"><span class="pill">Threads</span></label>
+      <label><input type="radio" name="platform" value="Facebook"><span class="pill">Facebook</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">5</span>語言</h2>
+    <p class="hint">看你的受眾程度決定。</p>
+    <div class="fields opts" id="lang">
+      <label><input type="radio" name="lang" value="全中文" checked><span class="pill">全中文</span></label>
+      <label><input type="radio" name="lang" value="中文為主、英文輔助"><span class="pill">中文為主・英文輔助</span></label>
+      <label><input type="radio" name="lang" value="全英文（教學對象為零基礎）"><span class="pill">全英文</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">6</span>我的風格</h2>
+    <p class="hint">勾 1–2 個，讓 AI 抓你的語氣——30 位老師不該長出同一支影片。</p>
+    <div class="fields opts" id="style">
+      <label><input type="checkbox" value="活潑有梗"><span class="pill">活潑有梗</span></label>
+      <label><input type="checkbox" value="溫柔知性"><span class="pill">溫柔知性</span></label>
+      <label><input type="checkbox" value="冷面笑匠"><span class="pill">冷面笑匠</span></label>
+      <label><input type="checkbox" value="條理專業"><span class="pill">條理專業</span></label>
+    </div>
+    <p class="style-note" id="styleNote"></p>
+  </div>
+
+  <button class="go" id="generate">生成我的 AI 指令 ✨</button>
+  <p class="warn" id="warn">還有欄位沒填喔——主題和受眾三格是必填的。</p>
+
+  <div class="result" id="result">
+    <h3>你的 AI 指令（全選複製，貼給任何 AI）</h3>
+    <pre id="output"></pre>
+    <button class="copy" id="copyBtn">一鍵複製 📋</button>
+  </div>
+
+  <footer>世新大學華語文教學中心・社群吸睛攻略講座｜受眾是一群擁有相似痛點的人</footer>
+</div>
+
+<script>
+(function(){
+  var styleBoxes = document.querySelectorAll('#style input[type=checkbox]');
+  styleBoxes.forEach(function(box){
+    box.addEventListener('change', function(){
+      var checked = document.querySelectorAll('#style input:checked');
+      if(checked.length > 2){ box.checked = false; }
+      document.getElementById('styleNote').textContent = checked.length > 2 ? '最多勾 2 個就好，太多語氣 AI 會混亂' : '';
+    });
+  });
+
+  function val(id){ return document.getElementById(id).value.trim(); }
+  function picked(name){ var el = document.querySelector('input[name='+name+']:checked'); return el ? el.value : ''; }
+
+  document.getElementById('generate').addEventListener('click', function(){
+    var topic = val('topic'), who = val('aud-who'), pain = val('aud-pain'), want = val('aud-want');
+    var warn = document.getElementById('warn');
+    if(!topic || !who || !pain || !want){ warn.style.display = 'block'; return; }
+    warn.style.display = 'none';
+
+    var styles = Array.prototype.map.call(document.querySelectorAll('#style input:checked'), function(b){ return b.value; });
+    var styleText = styles.length ? styles.join('、') : '自然、像真人說話';
+
+    var prompt =
+'你是一位華語文教學老師，擅長把語言教學內容轉譯成吸引人的社群內容。請根據以下資訊，幫我產出腳本。\n\n' +
+'【產出要求】\n' +
+'1. 先給我 3 個不同角度的鉤子（開頭第一句），並用一句話說明每個鉤子打中受眾的哪個痛點\n' +
+'2. 等我選定鉤子後，再產出完整腳本：口語逐字稿（標註秒數節奏）、畫面或字卡建議、結尾行動呼籲（CTA）\n' +
+'3. 腳本要口語、像真人說話，不要書面語\n' +
+'4. 長度必須符合我指定的形式（影片以每秒約 3-4 個字估算）\n' +
+'5. 專業內容以我提供的教學知識為準，你負責的是「怎麼說」，不是「教什麼」——不確定的語言知識請標註出來讓我確認\n\n' +
+'【1. 主題】' + topic + '\n' +
+'【2. 形式與長度】' + picked('format') + '\n' +
+'【3. 我的受眾】\n' +
+'・他是誰：' + who + '\n' +
+'・他的痛點：' + pain + '\n' +
+'・他想要：' + want + '\n' +
+'【4. 呈現平台】' + picked('platform') + '\n' +
+'【5. 語言】' + picked('lang') + '\n' +
+'【6. 我的風格】' + styleText;
+
+    document.getElementById('output').textContent = prompt;
+    document.getElementById('result').classList.add('show');
+    document.getElementById('result').scrollIntoView({behavior:'smooth'});
+  });
+
+  document.getElementById('copyBtn').addEventListener('click', function(){
+    var text = document.getElementById('output').textContent;
+    var btn = this;
+    function done(){ btn.textContent = '已複製！去貼給 AI 吧 ✅'; setTimeout(function(){ btn.textContent = '一鍵複製 📋'; }, 2000); }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done);
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = text; document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta); done();
+    }
+  });
+})();
+</script>
+</body>
+</html>
