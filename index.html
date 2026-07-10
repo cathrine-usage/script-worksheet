@@ -15,14 +15,17 @@
   .wrap{max-width:720px; margin:0 auto;}
   .eyebrow{font-size:13px; letter-spacing:.2em; color:var(--orange); font-weight:700; margin-bottom:8px;}
   h1{font-size:clamp(26px,5vw,36px); font-weight:900; line-height:1.3;}
-  .lead{color:var(--brown); margin:10px 0 32px; font-size:15px;}
+  .lead{color:var(--brown); margin:10px 0 16px; font-size:15px;}
+  .demo{display:inline-block; margin-bottom:24px; padding:9px 18px; background:#fff; border:1.5px dashed var(--orange); color:var(--orange); border-radius:99px; font-family:inherit; font-size:14px; font-weight:700; cursor:pointer;}
+  .demo:hover{background:#fff3ec;}
   .card{background:#fff; border-radius:16px; padding:22px 22px 24px; margin-bottom:18px; border:1px solid #f0e4d2;}
   .num{display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:50%; background:var(--gold); color:var(--ink); font-weight:900; font-size:14px; margin-right:10px; flex:none;}
   .card h2{font-size:17px; font-weight:700; display:flex; align-items:center; margin-bottom:4px;}
   .hint{font-size:13px; color:var(--muted); margin-bottom:14px; padding-left:38px;}
   .fields{padding-left:38px;}
-  input[type=text]{width:100%; padding:11px 14px; border:1.5px solid #e8dcc8; border-radius:10px; font-family:inherit; font-size:15px; background:#fffdf9;}
-  input[type=text]:focus{outline:none; border-color:var(--gold);}
+  input[type=text], textarea{width:100%; padding:11px 14px; border:1.5px solid #e8dcc8; border-radius:10px; font-family:inherit; font-size:15px; background:#fffdf9;}
+  textarea{min-height:96px; resize:vertical; line-height:1.7;}
+  input[type=text]:focus, textarea:focus{outline:none; border-color:var(--gold);}
   .aud-row{margin-bottom:12px;}
   .aud-row label{display:block; font-size:13.5px; font-weight:700; margin-bottom:4px;}
   .opts{display:flex; flex-wrap:wrap; gap:8px;}
@@ -37,7 +40,7 @@
   .result{display:none; margin-top:22px;}
   .result.show{display:block;}
   .result h3{font-size:16px; font-weight:700; margin-bottom:10px;}
-  pre{white-space:pre-wrap; word-break:break-word; background:var(--ink); color:#f5edE0; border-radius:14px; padding:20px; font-size:13.5px; font-family:'Noto Sans TC',monospace; line-height:1.8; max-height:420px; overflow:auto;}
+  pre{white-space:pre-wrap; word-break:break-word; background:var(--ink); color:#f5ede0; border-radius:14px; padding:20px; font-size:13.5px; font-family:'Noto Sans TC',monospace; line-height:1.8; max-height:420px; overflow:auto;}
   .copy{margin-top:12px; width:100%; padding:14px; background:var(--gold); border:none; border-radius:12px; font-family:inherit; font-size:16px; font-weight:900; color:var(--ink); cursor:pointer;}
   .copy:hover{background:#f0b32e;}
   .warn{color:var(--orange); font-size:13.5px; margin-top:8px; display:none;}
@@ -48,18 +51,25 @@
 <div class="wrap">
   <p class="eyebrow">不只是教課，還要會發文</p>
   <h1>教學內容腳本學習單</h1>
-  <p class="lead">填完六格，按下「生成我的 AI 指令」，把整段複製貼給任何 AI（ChatGPT、Claude、Gemini 都可以），它就會照你的受眾和平台幫你產出腳本。記住：AI 負責快，你負責真。</p>
+  <p class="lead">填完八格，按下「生成我的 AI 指令」，把整段複製貼給任何 AI（ChatGPT、Claude、Gemini 都可以），它就會照你的受眾和平台幫你產出腳本。記住：AI 負責快，你負責真。</p>
+  <button class="demo" id="fillDemo">✏️ 不知道怎麼填？一鍵填入範例</button>
 
   <div class="card">
     <h2><span class="num">1</span>主題</h2>
-    <p class="hint">這支內容要教的「一個」點，一次只教一個。例：「再」「在」怎麼分</p>
+    <p class="hint">這支內容要教的「一個」點，一次只教一個。</p>
     <div class="fields"><input type="text" id="topic" placeholder="例：「再」「在」怎麼分"></div>
   </div>
 
   <div class="card">
-    <h2><span class="num">2</span>形式與長度</h2>
+    <h2><span class="num">2</span>我的教學重點</h2>
+    <p class="hint">用你上課的講法，寫 2–3 句核心觀念或口訣。這格是整份的靈魂——專業由你提供，AI 只負責把它說得吸引人。</p>
+    <div class="fields"><textarea id="knowledge" placeholder="例：「再」表示動作重複或未來（再見、再吃一次）；「在」表示位置或進行中（在家、在吃飯）。我上課會用「再＝again、在＝at」幫英語母語者記。"></textarea></div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">3</span>形式與長度</h2>
     <p class="hint">不想露臉、不會剪片？圖卡和純文字也是好選擇。</p>
-    <div class="fields opts" id="format">
+    <div class="fields opts">
       <label><input type="radio" name="format" value="短影音 15-30 秒（單點爆發）"><span class="pill">短影音 15–30 秒</span></label>
       <label><input type="radio" name="format" value="短影音 30-60 秒（觀念＋例句）" checked><span class="pill">短影音 30–60 秒</span></label>
       <label><input type="radio" name="format" value="圖卡 5-8 張（可保存的知識卡）"><span class="pill">圖卡 5–8 張</span></label>
@@ -68,7 +78,7 @@
   </div>
 
   <div class="card">
-    <h2><span class="num">3</span>我的受眾</h2>
+    <h2><span class="num">4</span>我的受眾</h2>
     <p class="hint">受眾是一群擁有相似痛點的人。寫得越具體，腳本越準。</p>
     <div class="fields">
       <div class="aud-row"><label for="aud-who">他是誰</label><input type="text" id="aud-who" placeholder="例：19–25 歲交換生，在台一學期，有基礎中文"></div>
@@ -78,9 +88,9 @@
   </div>
 
   <div class="card">
-    <h2><span class="num">4</span>呈現平台</h2>
+    <h2><span class="num">5</span>呈現平台</h2>
     <p class="hint">先想你的受眾在哪，再選平台。</p>
-    <div class="fields opts" id="platform">
+    <div class="fields opts">
       <label><input type="radio" name="platform" value="Instagram（Reels／圖卡）" checked><span class="pill">Instagram</span></label>
       <label><input type="radio" name="platform" value="TikTok"><span class="pill">TikTok</span></label>
       <label><input type="radio" name="platform" value="YouTube Shorts"><span class="pill">YouTube Shorts</span></label>
@@ -90,9 +100,9 @@
   </div>
 
   <div class="card">
-    <h2><span class="num">5</span>語言</h2>
+    <h2><span class="num">6</span>語言</h2>
     <p class="hint">看你的受眾程度決定。</p>
-    <div class="fields opts" id="lang">
+    <div class="fields opts">
       <label><input type="radio" name="lang" value="全中文" checked><span class="pill">全中文</span></label>
       <label><input type="radio" name="lang" value="中文為主、英文輔助"><span class="pill">中文為主・英文輔助</span></label>
       <label><input type="radio" name="lang" value="全英文（教學對象為零基礎）"><span class="pill">全英文</span></label>
@@ -100,7 +110,7 @@
   </div>
 
   <div class="card">
-    <h2><span class="num">6</span>我的風格</h2>
+    <h2><span class="num">7</span>我的風格</h2>
     <p class="hint">勾 1–2 個，讓 AI 抓你的語氣——30 位老師不該長出同一支影片。</p>
     <div class="fields opts" id="style">
       <label><input type="checkbox" value="活潑有梗"><span class="pill">活潑有梗</span></label>
@@ -111,8 +121,19 @@
     <p class="style-note" id="styleNote"></p>
   </div>
 
+  <div class="card">
+    <h2><span class="num">8</span>我希望看的人做什麼</h2>
+    <p class="hint">有下一步動作，就是成功的內容。選一個最想要的。</p>
+    <div class="fields opts">
+      <label><input type="radio" name="cta" value="追蹤我的帳號" checked><span class="pill">追蹤我</span></label>
+      <label><input type="radio" name="cta" value="在留言區互動（回答問題、造句、分享經驗）"><span class="pill">留言互動</span></label>
+      <label><input type="radio" name="cta" value="收藏或分享這則內容"><span class="pill">分享收藏</span></label>
+      <label><input type="radio" name="cta" value="私訊詢問課程"><span class="pill">私訊詢問課程</span></label>
+    </div>
+  </div>
+
   <button class="go" id="generate">生成我的 AI 指令 ✨</button>
-  <p class="warn" id="warn">還有欄位沒填喔——主題和受眾三格是必填的。</p>
+  <p class="warn" id="warn">還有欄位沒填喔——主題、教學重點和受眾三格是必填的。</p>
 
   <div class="result" id="result">
     <h3>你的 AI 指令（全選複製，貼給任何 AI）</h3>
@@ -136,33 +157,54 @@
 
   function val(id){ return document.getElementById(id).value.trim(); }
   function picked(name){ var el = document.querySelector('input[name='+name+']:checked'); return el ? el.value : ''; }
+  function setVal(id, v){ document.getElementById(id).value = v; }
+  function setRadio(name, v){
+    var el = document.querySelector('input[name='+name+'][value="'+v+'"]');
+    if(el){ el.checked = true; }
+  }
+
+  document.getElementById('fillDemo').addEventListener('click', function(){
+    setVal('topic','「再」「在」怎麼分');
+    setVal('knowledge','「再」表示動作重複或未來（再見、再吃一次）；「在」表示位置或進行中（在家、在吃飯）。我上課會用「再＝again、在＝at」幫英語母語者記。');
+    setVal('aud-who','19–25 歲大學交換生，在台北停留一學期，修過一年基礎中文');
+    setVal('aud-pain','課本中文學得很流利，但實際溝通常聽不懂在地用語');
+    setVal('aud-want','離開台灣前能用在地用語自然對話');
+    setRadio('format','短影音 30-60 秒（觀念＋例句）');
+    setRadio('platform','Instagram（Reels／圖卡）');
+    setRadio('lang','中文為主、英文輔助');
+    setRadio('cta','在留言區互動（回答問題、造句、分享經驗）');
+    document.querySelectorAll('#style input').forEach(function(b){ b.checked = (b.value === '活潑有梗'); });
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
 
   document.getElementById('generate').addEventListener('click', function(){
-    var topic = val('topic'), who = val('aud-who'), pain = val('aud-pain'), want = val('aud-want');
+    var topic = val('topic'), knowledge = val('knowledge'), who = val('aud-who'), pain = val('aud-pain'), want = val('aud-want');
     var warn = document.getElementById('warn');
-    if(!topic || !who || !pain || !want){ warn.style.display = 'block'; return; }
+    if(!topic || !knowledge || !who || !pain || !want){ warn.style.display = 'block'; return; }
     warn.style.display = 'none';
 
     var styles = Array.prototype.map.call(document.querySelectorAll('#style input:checked'), function(b){ return b.value; });
     var styleText = styles.length ? styles.join('、') : '自然、像真人說話';
 
     var prompt =
-'你是一位華語文教學老師，擅長把語言教學內容轉譯成吸引人的社群內容。請根據以下資訊，幫我產出腳本。\n\n' +
+'你是一位華語文教學老師，擅長把語言教學內容轉譯成吸引人的社群內容。請根據以下資訊，幫我產出腳本。請以繁體中文回覆。\n\n' +
 '【產出要求】\n' +
 '1. 先給我 3 個不同角度的鉤子（開頭第一句），並用一句話說明每個鉤子打中受眾的哪個痛點\n' +
-'2. 等我選定鉤子後，再產出完整腳本：口語逐字稿（標註秒數節奏）、畫面或字卡建議、結尾行動呼籲（CTA）\n' +
+'2. 等我選定鉤子後，再產出完整腳本：口語逐字稿（標註秒數節奏）、畫面或字卡建議、結尾行動呼籲（CTA），並附上發文用的貼文文案（caption）與 3-5 個 hashtag 建議\n' +
 '3. 腳本要口語、像真人說話，不要書面語\n' +
 '4. 長度必須符合我指定的形式（影片以每秒約 3-4 個字估算）\n' +
-'5. 專業內容以我提供的教學知識為準，你負責的是「怎麼說」，不是「教什麼」——不確定的語言知識請標註出來讓我確認\n\n' +
+'5. 專業內容以我提供的「教學重點」為準，你負責的是「怎麼說」，不是「教什麼」——如果需要補充我沒提供的語言知識，請標註出來讓我確認\n\n' +
 '【1. 主題】' + topic + '\n' +
-'【2. 形式與長度】' + picked('format') + '\n' +
-'【3. 我的受眾】\n' +
+'【2. 我的教學重點】' + knowledge + '\n' +
+'【3. 形式與長度】' + picked('format') + '\n' +
+'【4. 我的受眾】\n' +
 '・他是誰：' + who + '\n' +
 '・他的痛點：' + pain + '\n' +
 '・他想要：' + want + '\n' +
-'【4. 呈現平台】' + picked('platform') + '\n' +
-'【5. 語言】' + picked('lang') + '\n' +
-'【6. 我的風格】' + styleText;
+'【5. 呈現平台】' + picked('platform') + '\n' +
+'【6. 語言】' + picked('lang') + '\n' +
+'【7. 我的風格】' + styleText + '\n' +
+'【8. 我希望觀眾的下一步】' + picked('cta');
 
     document.getElementById('output').textContent = prompt;
     document.getElementById('result').classList.add('show');
